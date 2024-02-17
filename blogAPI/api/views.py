@@ -11,13 +11,32 @@ from rest_framework import generics, mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
+from .permissions import IsOwnerOrReadOnly
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsOwnerOrReadOnly]
+
+    # def get_queryset(self):
+    #     # return super().get_queryset()
+    #     return Article.objects.filter(author=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    # def perform_update(self, serializer):
+    #     # return super().perform_update(serializer)
+    #     # Allow users to edit only their own posts
+    #     if serializer.instance.author == self.request.user:
+    #         serializer.save()
+    #     else:
+    #         # You may raise a PermissionDenied exception or handle it as per your requirements
+    #         # raise PermissionDenied("You don't have permission to edit this post.")
+
+    #         return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 class UserViewSet(viewsets.ModelViewSet):
