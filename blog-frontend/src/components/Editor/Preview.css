@@ -144,9 +144,9 @@
   font-size: 18px;
   color: #cccccc;
 }
-.content p {
-  /* color: #dedede; */
-}
+/* .content p {
+  color: #dedede;
+} */
 .content em {
   color: white;
   font-style: italic;

@@ -10,6 +10,8 @@ import NotFound from "./components/NotFound";
 import BlogPage from "./components/Blog/BlogPage";
 import Editor from "./components/Editor/Editor";
 import Post from "./components/Blog/Post";
+import Signup from "./components/Signup/Signup";
+import { CookiesProvider } from "react-cookie";
 
 export const ArticlesContext = createContext(undefined);
 
@@ -20,7 +22,7 @@ function App() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Token c009638bf4040876402fdb802ca4027ab0823988",
+        // Authorization: "Token c009638bf4040876402fdb802ca4027ab0823988",
       },
     })
       .then((res) => res.json())
@@ -30,22 +32,25 @@ function App() {
 
   return (
     <div className="container">
-      <ArticlesContext.Provider value={articles}>
-        <Navbar />
-        <Routes>
-          {/* <Route path="/" element={<Navbar />}> */}
-          <Route path="/blogs" element={<BlogList />} />
-          <Route path="/blogs/:id" element={<Post />} />
-          <Route path="/myblogs" element={<BlogPage />} />
-          <Route path="/writeblog" element={<Editor />} />
-          <Route path="/authors" element={<OtherAuthors />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
-          {/* </Route> */}
-        </Routes>
-        {/* <Navbar />
+      <CookiesProvider>
+        <ArticlesContext.Provider value={articles}>
+          <Navbar />
+          <Routes>
+            {/* <Route path="/" element={<Navbar />}> */}
+            <Route path="/blogs" element={<BlogList />} />
+            <Route path="/blogs/:id" element={<Post />} />
+            <Route path="/myblogs" element={<BlogPage />} />
+            <Route path="/writeblog" element={<Editor />} />
+            <Route path="/authors" element={<OtherAuthors />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFound />} />
+            {/* </Route> */}
+          </Routes>
+          {/* <Navbar />
       <BlogList /> */}
-      </ArticlesContext.Provider>
+        </ArticlesContext.Provider>
+      </CookiesProvider>
     </div>
   );
 }

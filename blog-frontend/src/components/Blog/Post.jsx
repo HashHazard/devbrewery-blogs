@@ -7,7 +7,12 @@ const Post = () => {
   const articles = useContext(ArticlesContext);
   const blog = articles.filter((article) => article.id === Number(id))[0];
 
-  if (!blog) return <span>The blog post you've requested doesn't exist.</span>;
+  if (!blog)
+    return (
+      <span style={{ padding: "100px" }}>
+        The blog post you've requested doesn't exist.
+      </span>
+    );
   console.log(blog);
 
   return (

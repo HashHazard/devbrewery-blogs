@@ -97,14 +97,16 @@ const Navbar = ({ theme, setTheme }) => {
           <input type="text" placeholder="Search blogs..." />
           <SearchIcon className="search" />
         </div>
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          whileHover={{ scale: 1.03 }}
-          transition={{ ease: "easeInOut", duration: 0.1 }}
-          className="signup-btn"
-        >
-          Sign Up
-        </motion.button>
+        <Link to="/signup">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.03 }}
+            transition={{ ease: "easeInOut", duration: 0.1 }}
+            className="signup-btn"
+          >
+            Sign Up
+          </motion.button>
+        </Link>
       </motion.nav>
       <main>
         <Outlet />
