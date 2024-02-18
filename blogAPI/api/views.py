@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
 from .permissions import IsOwnerOrReadOnly
+from rest_framework.authtoken.models import Token
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -23,6 +24,10 @@ class ArticleViewSet(viewsets.ModelViewSet):
     # def get_queryset(self):
     #     # return super().get_queryset()
     #     return Article.objects.filter(author=self.request.user)
+
+    # def get_queryset(self):
+    #     print(self.request.user)
+    #     return super().get_queryset()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -37,6 +42,44 @@ class ArticleViewSet(viewsets.ModelViewSet):
     #         # raise PermissionDenied("You don't have permission to edit this post.")
 
     #         return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+class UserBlogs(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ArticleSerializer
+
+    permission_classes = [IsOwnerOrReadOnly]
+    authentication_classes = (TokenAuthentication, )
+
+    def get_queryset(self):
+        return Article.objects.filter(author=self.request.user.id)
+
+
+class CheckAuth(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Check if the user is authenticated
+        if request.auth and request.user.is_authenticated:
+            return Response({"message": "Authenticated"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
+
+# class CheckVAuth(viewsets.ReadOnlyModelViewSet):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#     permission_classes = [IsOwnerOrReadOnly]
+#     authentication_classes = (TokenAuthentication, )
+
+#     def get_queryset(self):
+#         if (self.request.user == "AnonymousUser"):
+#             data = {'message': 'Failed'}
+#             print("false")
+#             return Response(data, status=401)  # Set status code to 200 OK
+#         else:
+#             data = {'message': 'Success'}
+#             print("true")
+#             return Response(data, status=200)  # Set status code to 200 OK
 
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const BlogCard = ({ blog }) => {
-  const { title, author, summary, content, created_at, updated_at } = blog;
+  const { title, author_name, summary, content, created_at, updated_at } = blog;
   if (!blog) return <div>Nothing to Display</div>;
   const textColor = {
     // initial: { color: "#d9d8cc" },
@@ -50,7 +50,7 @@ const BlogCard = ({ blog }) => {
       <motion.p variants={descText} className="blog-desc">
         {summary}
       </motion.p>
-      <p className="blog-author">{author}</p>
+      <p className="blog-author">{author_name}</p>
     </motion.div>
   );
 };

@@ -9,6 +9,8 @@ class Article(models.Model):
     # author = models.CharField(max_length=50)
     author = models.ForeignKey(
         User, auto_created=True, on_delete=models.CASCADE)
+
+    author_name = models.CharField(max_length=100, blank=True)
     summary = models.TextField()
     content = models.TextField()
     created_at = models.DateTimeField(

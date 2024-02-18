@@ -34,7 +34,11 @@ const BlogList = () => {
       </motion.h1>
       <div className="blog-list">
         {articles.map((article) => (
-          <Link key={article.id} to={`/blogs/${article.id}`}>
+          <Link
+            style={{ textDecoration: "none" }}
+            key={article.id}
+            to={`/blogs/${article.id}`}
+          >
             <BlogCard blog={article} />
           </Link>
         ))}

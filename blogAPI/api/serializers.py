@@ -4,14 +4,6 @@ from .models import Article
 from rest_framework.authtoken.views import Token
 
 
-class ArticleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Article
-        fields = ['id', 'title', 'summary',
-                  'content', 'created_at', 'updated_at']
-        read_only_fields = ['created_at', 'updated_at', 'author']
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -24,5 +16,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        Token.objects.create(user=user)
         return user
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'author_name', 'summary',
+                  'content', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at', 'author']

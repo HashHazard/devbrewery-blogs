@@ -13,7 +13,7 @@ const Post = () => {
         The blog post you've requested doesn't exist.
       </span>
     );
-  console.log(blog);
+  // console.log(blog);
 
   return (
     <div style={{ padding: "100px" }}>
