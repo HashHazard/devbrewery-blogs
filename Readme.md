@@ -1,3 +1,3 @@
 # DevBrewery Blogs
 
-![Screenshot](docs/demo.png)
+![Screenshot](docs/blog.png)
